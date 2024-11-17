@@ -76,7 +76,7 @@ def log_likelihood(theta, x, y, yerr):
 def log_prior(theta):
   if(len(theta)==3):
     wid_fit, sig, em = theta
-    if 0 < wid_fit < 10 and 0 < sig < 1000 and 0 < em < 20:
+    if 0 < wid_fit < 25 and 0 < sig < 1000 and 0 < em < 30:
       return 0.0
   elif(len(theta)==6):
     wid_fit1, sig1, em1, wid_fit2, sig2, em2 = theta
@@ -324,7 +324,7 @@ for NucleiName in listOfNuclei:
   plt.legend(fontsize=14)
   plt.xlim(10, 25)
   plt.xlabel(r'$\gamma$-ray Energy [MeV]')
-  plt.ylabel("Cross Section [mb]");
+  plt.ylabel("Cross Section [mb]")
   
 
   #now need to do the walkers for the photoabsorption cross section to get the samples and shit like that
