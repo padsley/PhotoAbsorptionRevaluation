@@ -108,36 +108,34 @@ def log_probability(theta, x, y, yerr):
 #Tb159data = '/content/drive/MyDrive/Tb159.csv'
 #Ta181data = '/content/drive/MyDrive/Ta181.csv'
 listOfNuclei = list()
-listOfNuclei.append('Pb208')#fit works
-listOfNuclei.append('Tb159')#good fit
-listOfNuclei.append('Ta181')#good fit with a new dataset
-listOfNuclei.append('Pr141')#good fit
-listOfNuclei.append('Zr90')#finally a good fit!
-listOfNuclei.append('Zr91')#good fit
-listOfNuclei.append('Zr92')#good fit
-listOfNuclei.append('Tm169')#good fit
-listOfNuclei.append('La139')#good fit
-listOfNuclei.append('Au197')#good fit but might want to include lower-energy data
-listOfNuclei.append('Y89')#not a great fit but it seems to work
-listOfNuclei.append('Rh103')#good fit
-listOfNuclei.append('Sm144')#good fit
-listOfNuclei.append('Ba138')#good fit
-listOfNuclei.append('Cs133')#good fit
-listOfNuclei.append('Ho165')#good fit
-listOfNuclei.append('Pb206')
-listOfNuclei.append('Pb207')#good fit but very small!
-listOfNuclei.append('Zr94')
-listOfNuclei.append('Sn112')
-listOfNuclei.append('Sn114')
-listOfNuclei.append('Sn116')
-listOfNuclei.append('Sn117')
-listOfNuclei.append('Sn118')
-listOfNuclei.append('Sn119')
-listOfNuclei.append('Sn120')
-listOfNuclei.append('Sn122')
-listOfNuclei.append('Sn124')
-
-
+listOfNuclei.append('Y89')
+#listOfNuclei.append('Zr90')#finally a good fit! needs two peaks??
+#listOfNuclei.append('Zr91')#good fit
+#listOfNuclei.append('Zr92')#good fit
+#listOfNuclei.append('Zr94')
+#listOfNuclei.append('Rh103')#good fit
+#listOfNuclei.append('Sn112')
+#listOfNuclei.append('Sn114')
+#listOfNuclei.append('Sn116')
+#listOfNuclei.append('Sn117')
+#listOfNuclei.append('Sn118')
+#listOfNuclei.append('Sn119')
+#listOfNuclei.append('Sn120')
+#listOfNuclei.append('Sn122')
+#listOfNuclei.append('Sn124')
+#listOfNuclei.append('Cs133')#good fit
+#listOfNuclei.append('Ba138')#good fit
+#listOfNuclei.append('La139')#good fit
+#listOfNuclei.append('Pr141')#good fit
+#listOfNuclei.append('Sm144')#good fit
+#listOfNuclei.append('Tb159')#good fit
+#listOfNuclei.append('Ho165')#good fit
+#listOfNuclei.append('Tm169')#good fit
+#listOfNuclei.append('Ta181')#good fit with a new dataset
+#listOfNuclei.append('Au197')#good fit but might want to include lower-energy data
+#listOfNuclei.append('Pb206')
+#listOfNuclei.append('Pb207')#good fit but very small! -EXFOR data appear to peak at 500 mb not 600 mb as paper suggests
+#listOfNuclei.append('Pb208')#fit works
 
 PolarValues = []
 dPolarValues = []
@@ -145,6 +143,8 @@ MassNumberArray = []
 ElementNumberArray = []
 TRKValues = []
 dTRKValues = []
+ElementSymbolArray = []
+StoreDBResultsForLaTeXTable = []
 
 #load values from Dietrich and Berman, so many data entry errors which I had to check :'(
 DBMassArray = [89,89,89,90,90,91,92,92,93,94,94,96,98,100,103,107,115,115,116,116,117,117,118,118,119,120,120,124,124,124,126,127,127,127,128,130,133,133,138,139,140,141,141,141,141,141,142,142,143,144,144,145,146,148,148,150,150,152,153,154,159,159,160,165,165,175,181,181,186,186,188,189,190,190,197,197,197,206,207,208,208,208,209,209]
@@ -187,11 +187,26 @@ for NucleiName in listOfNuclei:
   #extract the mass number from the array (eventually, this took me way too long!)
   A = ''.join(filter(str.isdigit,NucleiName))
   print("the mass number is",A)
+  numberA = int(A)#need to convert to use as a number in calculations
+  print("numberA = ",numberA)
+  
+  for i in range(len(DBMassArray)):
+    dummytext = ""
+    if(numberA==DBMassArray[i]):
+        print("DBMassArray[",i,"]: ",DBMassArray[i])
+        print("DBPolarValues[",i,"]: ",str(DBPolarValues[i]))
+        dummytext += str(DBPolarValues[i])
+        dummytext += "/"
+    
+  print("dummy text for storing DB results for LaTeX Table: ",dummytext)
+  StoreDBResultsForLaTeXTable.append(dummytext)
 
   ElementSymbol = ''.join(filter(str.isalpha,NucleiName))
   print("the element symbol is",ElementSymbol)
   ElementNumber = (np.where(ListOfElementSymbols==ElementSymbol))[0]+1#returns an array for the symbol index starting at 0 so we need to add one to get proton number and also get a number not an array
   print('the element/proton number is',ElementNumber[0])
+
+  ElementSymbolArray.append(ElementSymbol)
 
   xdata = nucleiData[1:,0]
   ydata = nucleiData[1:,1]
@@ -250,7 +265,7 @@ for NucleiName in listOfNuclei:
   nll = lambda *args: -log_likelihood(*args)
 
   #generalising the starting guesses
-  numberA = int(A)#need to convert to use as a number in calculations
+  
 
   if(len(PeakLocations)==1):
     initial = np.array([PeakWidths[0],ydata[PeakIndices[0]],PeakLocations[0]])+ 0.1*np.random.randn(3)
@@ -559,7 +574,7 @@ for NucleiName in listOfNuclei:
   #print(percentiles[1])
   #print(PolarValues)
   dPolarValues.append(percentiles[1]-percentiles[0])
-  TRKValues.append(percentiles_TRK)
+  TRKValues.append(percentiles_TRK[1])
   dTRKValues.append(percentiles_TRK[1]-percentiles_TRK[0])
 #for loop should end here!
 
@@ -684,5 +699,63 @@ for i in range(len(TRKValues)):
   print('MassNumberArray',MassNumberArray[i],'ElementNumberArray',ElementNumberArray[i],'Neutrons!',MassNumberArray[i]-ElementNumberArray[i])
   TRKCalculation = 60*(MassNumberArray[i] - ElementNumberArray[i]) * ElementNumberArray[i]/ MassNumberArray[i] * (1+kappa) #in MeV mb, 60NZ/A(1+k)
   print('Nuclei Name:',listOfNuclei[i],'TRKValues',TRKValues[i],'TRKCalculation',TRKCalculation,'TRK Sum Value',TRKValues[i]/TRKCalculation)
+
+#make LaTeX table for paper
+for i in range(len(PolarValues)):
+    superstring =  "$^{"
+    superstring += str(MassNumberArray[i])
+    superstring += "}$"
+    superstring += str(ElementSymbolArray[i])
+    superstring += " & "
+    superstring += str(StoreDBResultsForLaTeXTable[i])
+    superstring += " & "
+    superstring += "dummy for now"
+    superstring += " & "
+    
+    if(dPolarValues[i]<0.01):
+        superstring += "{0:.3f}".format(PolarValues[i])
+    elif(dPolarValues[i]<0.1):
+        superstring += "{0:.2f}".format(PolarValues[i])
+    elif(dPolarValues[i]<1):
+        superstring += "{0:.1f}".format(PolarValues[i])
+    else:
+        superstring += "{0:.0f}".format(PolarValues[i])
+    superstring += "("
+    
+    if(dPolarValues[i]<0.01):
+        superstring += str(round(dPolarValues[i]*1000))
+    elif(dPolarValues[i]<0.1):
+        superstring += str(round(dPolarValues[i]*100))
+    elif(dPolarValues[i]<1):
+        superstring += str(round(dPolarValues[i]*10))
+    else:
+        superstring += str(round(dPolarValues[i]))
+        
+    superstring += ")"
+    
+    superstring += " & "
+    
+    if(dTRKValues[i]/TRKCalculation<0.01):
+        superstring += "{0:.3f}".format(TRKValues[i]/TRKCalculation)
+    elif(dTRKValues[i]/TRKCalculation<0.1):
+        superstring += "{0:.2f}".format(TRKValues[i]/TRKCalculation)
+    elif(dTRKValues[i]/TRKCalculation<1):
+        superstring += "{0:.1f}".format(TRKValues[i]/TRKCalculation)
+    else:
+        superstring += str(round(TRKValues[i])/TRKCalculation)
+    superstring += "("
+    
+    if(dTRKValues[i]/TRKCalculation<0.01):
+        superstring += str(round(dTRKValues[i]*1000/TRKCalculation))
+    elif(dTRKValues[i]/TRKCalculation<0.1):
+        superstring += str(round(dTRKValues[i]*100/TRKCalculation))
+    elif(dTRKValues[i]/TRKCalculation<1):
+        superstring += str(round(dTRKValues[i]*10/TRKCalculation))
+    else:
+        superstring += str(round(dTRKValues[i]/TRKCalculation))
+        
+    superstring += ") \\\\"
+    
+    print(superstring)
 
 """# New Section"""
