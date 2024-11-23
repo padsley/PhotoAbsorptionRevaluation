@@ -109,33 +109,33 @@ def log_probability(theta, x, y, yerr):
 #Ta181data = '/content/drive/MyDrive/Ta181.csv'
 listOfNuclei = list()
 listOfNuclei.append('Y89')
-#listOfNuclei.append('Zr90')#finally a good fit! needs two peaks??
-#listOfNuclei.append('Zr91')#good fit
-#listOfNuclei.append('Zr92')#good fit
-#listOfNuclei.append('Zr94')
-#listOfNuclei.append('Rh103')#good fit
-#listOfNuclei.append('Sn112')
-#listOfNuclei.append('Sn114')
-#listOfNuclei.append('Sn116')
-#listOfNuclei.append('Sn117')
-#listOfNuclei.append('Sn118')
-#listOfNuclei.append('Sn119')
-#listOfNuclei.append('Sn120')
-#listOfNuclei.append('Sn122')
-#listOfNuclei.append('Sn124')
-#listOfNuclei.append('Cs133')#good fit
-#listOfNuclei.append('Ba138')#good fit
-#listOfNuclei.append('La139')#good fit
-#listOfNuclei.append('Pr141')#good fit
-#listOfNuclei.append('Sm144')#good fit
-#listOfNuclei.append('Tb159')#good fit
-#listOfNuclei.append('Ho165')#good fit
-#listOfNuclei.append('Tm169')#good fit
-#listOfNuclei.append('Ta181')#good fit with a new dataset
-#listOfNuclei.append('Au197')#good fit but might want to include lower-energy data
-#listOfNuclei.append('Pb206')
-#listOfNuclei.append('Pb207')#good fit but very small! -EXFOR data appear to peak at 500 mb not 600 mb as paper suggests
-#listOfNuclei.append('Pb208')#fit works
+listOfNuclei.append('Zr90')#finally a good fit! needs two peaks??
+listOfNuclei.append('Zr91')#good fit
+listOfNuclei.append('Zr92')#good fit
+listOfNuclei.append('Zr94')
+listOfNuclei.append('Rh103')#good fit
+listOfNuclei.append('Sn112')
+listOfNuclei.append('Sn114')
+listOfNuclei.append('Sn116')
+listOfNuclei.append('Sn117')
+listOfNuclei.append('Sn118')
+listOfNuclei.append('Sn119')
+listOfNuclei.append('Sn120')
+listOfNuclei.append('Sn122')
+listOfNuclei.append('Sn124')
+listOfNuclei.append('Cs133')#good fit
+listOfNuclei.append('Ba138')#good fit
+listOfNuclei.append('La139')#good fit
+listOfNuclei.append('Pr141')#good fit
+listOfNuclei.append('Sm144')#good fit
+listOfNuclei.append('Tb159')#good fit
+listOfNuclei.append('Ho165')#good fit
+listOfNuclei.append('Tm169')#good fit
+listOfNuclei.append('Ta181')#good fit with a new dataset
+listOfNuclei.append('Au197')#good fit but might want to include lower-energy data
+listOfNuclei.append('Pb206')
+listOfNuclei.append('Pb207')#good fit but very small! -EXFOR data appear to peak at 500 mb not 600 mb as paper suggests
+listOfNuclei.append('Pb208')#fit works
 
 PolarValues = []
 dPolarValues = []
@@ -145,10 +145,16 @@ TRKValues = []
 dTRKValues = []
 ElementSymbolArray = []
 StoreDBResultsForLaTeXTable = []
+StoreCeboNicoResultsForLaTeXTable = []
 
 #load values from Dietrich and Berman, so many data entry errors which I had to check :'(
 DBMassArray = [89,89,89,90,90,91,92,92,93,94,94,96,98,100,103,107,115,115,116,116,117,117,118,118,119,120,120,124,124,124,126,127,127,127,128,130,133,133,138,139,140,141,141,141,141,141,142,142,143,144,144,145,146,148,148,150,150,152,153,154,159,159,160,165,165,175,181,181,186,186,188,189,190,190,197,197,197,206,207,208,208,208,209,209]
 DBPolarValues = [3.48,4.46,2.52,3.38,4.08,4.07,3.92,3.16,4.80,4.40,4.73,5.44,5.89,6.06,5.97,4.82,7.13,6.91,6.13,6.78,7.30,7.05,6.83,7.07,7.55,7.79,7.49,8.02,6.74,8.29,8.56,6.70,8.53,5.4,8.92,9.27,8.09,9.09,8.71,8.54,10.3,8.37,7.31,6.41,7.0,6.4,10.7,8.66,9.39,9.01,8.41,11.3,9.6,9.02,9.51,10.4,10.4,10.5,10.2,10.6,10.5,12.1,11.6,13.9,12.9,12.5,10.7,14.8,14.5,13.2,16.7,16.7,15.8,16.0,14.7,15.9,15.6,15.0,14.2,14.2,17.6,13.3,15.8,13.8]
+
+#removed 138La from this list because 138Ba in amongst the nuclei we analysed
+CeboNicoMassArray = [45,50,51,56,766,92,95,139,153]
+CeboNicoPolarValues = [1.840,1.458,1.472,2.231,3.189,3.131,4.743,8.015,9.999]
+CeboNicoPolarValuesUncertainties = [0.130,0.100,0.100,0.155,0.225,0.220,0.330,0.560,0.700]
 
 if(len(DBMassArray)!=len(DBPolarValues)):
   print("MESSED UP THE Dietrich and Berman RESULTS!!!")
@@ -190,16 +196,31 @@ for NucleiName in listOfNuclei:
   numberA = int(A)#need to convert to use as a number in calculations
   print("numberA = ",numberA)
   
+  dummytext = ""
+  
   for i in range(len(DBMassArray)):
-    dummytext = ""
     if(numberA==DBMassArray[i]):
         print("DBMassArray[",i,"]: ",DBMassArray[i])
         print("DBPolarValues[",i,"]: ",str(DBPolarValues[i]))
-        dummytext += str(DBPolarValues[i])
-        dummytext += "/"
+        if(dummytext==""):
+            dummytext += str(DBPolarValues[i])
+        else:
+            dummytext += "/"
+            dummytext += str(DBPolarValues[i])
     
   print("dummy text for storing DB results for LaTeX Table: ",dummytext)
   StoreDBResultsForLaTeXTable.append(dummytext)
+  
+  
+  dummytext = ""
+  for i in range(len(CeboNicoMassArray)):
+      if(numberA==CeboNicoMassArray[i]):
+          dummytext += str(CeboNicoPolarValues[i])
+          dummytext += "("
+          dummytext += str(CeboNicoPolarValuesUncertainties[i]*1000)#the x1000 is cheating to get the right formatting for the table since all of the uncertainties are around the same size, don't judge me
+          dummytext += ")"
+  
+  StoreCeboNicoResultsForLaTeXTable.append(dummytext)
 
   ElementSymbol = ''.join(filter(str.isalpha,NucleiName))
   print("the element symbol is",ElementSymbol)
@@ -561,8 +582,6 @@ for NucleiName in listOfNuclei:
 
   #want to save the plots and the output values into a file at this point as well
 
-  #TODO - add the summing sum plots for the TRK and sigma_{-2}
-
   #print(NucleiName)
   MassNumberArray.append(numberA)
   #print(numberA)
@@ -679,6 +698,9 @@ rect2 = patches.Rectangle((86,y_range[0]),6,y_range[1]-y_range[0],alpha=0.3,colo
 plt.gca().add_patch(rect2)
 rect3 = patches.Rectangle((208,y_range[0]),2,y_range[1]-y_range[0],alpha=0.3,color='blue')#adding the region of the N=126 shell closure
 plt.gca().add_patch(rect3)
+rect_z1 = patches.Rectangle((112,y_range[0]),12,y_range[1]-y_range[0],alpha=0.3,color='red')#adding the Z=50 shell closure
+plt.gca().add_patch(rect_z1)
+rect_z2 = patchhes.Rectangle((204,y_range[0]),4,y_range[1]-y_range[0],alpha=0.3,color='red')#adding the Z=82 shell closure
 plt.xlabel('Mass Number',fontsize=16)
 plt.ylabel(r'Ratio $\sigma_{-2}$ / 2.4 $\kappa$ $A^{5/3}$ [dimensionless]',fontsize=16)
 plt.legend()
@@ -709,7 +731,7 @@ for i in range(len(PolarValues)):
     superstring += " & "
     superstring += str(StoreDBResultsForLaTeXTable[i])
     superstring += " & "
-    superstring += "dummy for now"
+    superstring += str(StoreCeboNicoResultsForLaTeXTable[i])
     superstring += " & "
     
     if(dPolarValues[i]<0.01):
@@ -734,6 +756,8 @@ for i in range(len(PolarValues)):
     superstring += ")"
     
     superstring += " & "
+    
+    TRKCalculation = 60*(MassNumberArray[i] - ElementNumberArray[i]) * ElementNumberArray[i]/ MassNumberArray[i] * (1+kappa) #in MeV mb, 60NZ/A(1+k)
     
     if(dTRKValues[i]/TRKCalculation<0.01):
         superstring += "{0:.3f}".format(TRKValues[i]/TRKCalculation)
