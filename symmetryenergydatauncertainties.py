@@ -666,10 +666,18 @@ for i in range(len(GorielyMassArray)):
   GorielyPolarRatio.append(1000*GorielyPolarValues[i]/(2.4*pow(GorielyMassArray[i],5./3.)))
   dGorielyPolarRatio.append(1000*GorielyPolarValues[i]/(2.4*pow(GorielyMassArray[i],5./3.))*pow(pow(dGorielyPolarValues[i]/GorielyPolarValues[i],2.) + pow(0.1/2.4,2.),0.5))
 
-plt.errorbar(MassNumberArray,PolarValues, yerr=dPolarValues,fmt=".", capsize=0,label="Present Evaluation",color='red')
-plt.plot(DBMassArray,DBPolarValues,".",color='black',label="Dietrich and Berman")
-plt.errorbar(GorielyMassArray,GorielyPolarValues,yerr=dGorielyPolarValues,fmt=".",capsize=0,color='green',label="Goriely et al.")
-plt.errorbar(RCNPMassNumberArray,RCNPPolarValues, yerr=RCNPdPolarValues,fmt=".",color='purple',capsize=0,label="RCNP Data")
+
+#spread out values slightly in x - this is solely so people can see WTF is going on
+DBMassArrayPlotting = [x + 0.2 for x in DBMassArray]
+GorielyMassArrayPlotting = [x + 0.1 for x in GorielyMassArray]
+RCNPMassNumberArrayPlotting = [x - 0.1 for x in RCNPMassNumberArray]
+
+fig, ax = plt.subplots(1)
+ax.errorbar(MassNumberArray,PolarValues, yerr=dPolarValues,fmt=".", capsize=0,label="Present Evaluation",color='red')
+ax.set_aspect(0.5)
+plt.plot(DBMassArrayPlotting,DBPolarValues,".",color='black',label="Dietrich and Berman")
+plt.errorbar(GorielyMassArrayPlotting,GorielyPolarValues,yerr=dGorielyPolarValues,fmt=".",capsize=0,color='green',label="Goriely et al.")
+plt.errorbar(RCNPMassNumberArrayPlotting,RCNPPolarValues, yerr=RCNPdPolarValues,fmt=".",color='purple',capsize=0,label="RCNP Data")
 plt.xlabel('Mass Number')
 plt.ylabel(r'$\sigma_{-2}$ [mb/MeV]');
 plt.savefig('CombinedPolarPlot.pdf')
@@ -684,9 +692,9 @@ plt.errorbar(MassNumberArray, PolarValuesRatio, yerr=dPolarValuesRatio,fmt=".", 
 plt.axhline(y=1.0,xmin=0.01,xmax=0.99,color='blue',linestyle=':',alpha=1.0)#the xmin and xmax go from 0 to 1 for each part of the graph (thanks John)
 plt.axhline(y=2.5/2.4,xmin=0.01,xmax=0.99,color='blue',linestyle=':',alpha=0.75)
 plt.axhline(y=2.3/2.4,xmin=0.01,xmax=0.99,color='blue',linestyle=':',alpha=0.75)
-plt.plot(DBMassArray,DBPolarValuesRatio,".",color='black',label="Dietrich and Berman")
-plt.errorbar(GorielyMassArray,GorielyPolarRatio,yerr=dGorielyPolarRatio,fmt=".",capsize=0,color='green',label="Goriely et al.")
-plt.errorbar(RCNPMassNumberArray, RCNPPolarValuesRatio, yerr=RCNPdPolarValuesRatio,fmt=".",color='purple', capsize=0,label="RCNP Data")
+plt.plot(DBMassArrayPlotting,DBPolarValuesRatio,".",color='black',label="Dietrich and Berman")
+plt.errorbar(GorielyMassArrayPlotting,GorielyPolarRatio,yerr=dGorielyPolarRatio,fmt=".",capsize=0,color='green',label="Goriely et al.")
+plt.errorbar(RCNPMassNumberArrayPlotting, RCNPPolarValuesRatio, yerr=RCNPdPolarValuesRatio,fmt=".",color='purple', capsize=0,label="RCNP Data")
 
 
 y_range = plt.ylim()
@@ -700,7 +708,8 @@ rect3 = patches.Rectangle((208,y_range[0]),2,y_range[1]-y_range[0],alpha=0.3,col
 plt.gca().add_patch(rect3)
 rect_z1 = patches.Rectangle((112,y_range[0]),12,y_range[1]-y_range[0],alpha=0.3,color='red')#adding the Z=50 shell closure
 plt.gca().add_patch(rect_z1)
-rect_z2 = patchhes.Rectangle((204,y_range[0]),4,y_range[1]-y_range[0],alpha=0.3,color='red')#adding the Z=82 shell closure
+rect_z2 = patches.Rectangle((204,y_range[0]),4,y_range[1]-y_range[0],alpha=0.3,color='red')#adding the Z=82 shell closure
+plt.gca().add_patch(rect_z2)
 plt.xlabel('Mass Number',fontsize=16)
 plt.ylabel(r'Ratio $\sigma_{-2}$ / 2.4 $\kappa$ $A^{5/3}$ [dimensionless]',fontsize=16)
 plt.legend()
