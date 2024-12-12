@@ -673,11 +673,11 @@ GorielyMassArrayPlotting = [x + 0.1 for x in GorielyMassArray]
 RCNPMassNumberArrayPlotting = [x - 0.1 for x in RCNPMassNumberArray]
 
 fig, ax = plt.subplots(1)
-ax.errorbar(MassNumberArray,PolarValues, yerr=dPolarValues,fmt=".", capsize=0,label="Present Evaluation",color='red')
+ax.errorbar(MassNumberArray,PolarValues, yerr=dPolarValues,fmt=".", capsize=0,label="Present Evaluation",color='red',cap=1)
 ax.set_aspect(0.5)
 plt.plot(DBMassArrayPlotting,DBPolarValues,".",color='black',label="Dietrich and Berman")
-plt.errorbar(GorielyMassArrayPlotting,GorielyPolarValues,yerr=dGorielyPolarValues,fmt=".",capsize=0,color='green',label="Goriely et al.")
-plt.errorbar(RCNPMassNumberArrayPlotting,RCNPPolarValues, yerr=RCNPdPolarValues,fmt=".",color='purple',capsize=0,label="RCNP Data")
+plt.errorbar(GorielyMassArrayPlotting,GorielyPolarValues,yerr=dGorielyPolarValues,fmt=".",capsize=0,color='green',label="Goriely et al.",cap=1)
+plt.errorbar(RCNPMassNumberArrayPlotting,RCNPPolarValues, yerr=RCNPdPolarValues,fmt=".",color='purple',capsize=0,label="RCNP Data",cap=1)
 plt.xlabel('Mass Number')
 plt.ylabel(r'$\sigma_{-2}$ [mb/MeV]');
 plt.savefig('CombinedPolarPlot.pdf')
@@ -688,13 +688,13 @@ plt.clf()
 #plt.figure(6)
 
 #plt.plot(MassNumberArray,PolarValuesRatio)
-plt.errorbar(MassNumberArray, PolarValuesRatio, yerr=dPolarValuesRatio,fmt=".", capsize=0,label="Present Evaluation",color='red')
+plt.errorbar(MassNumberArray, PolarValuesRatio, yerr=dPolarValuesRatio,fmt=".", capsize=0,label="Present Evaluation",color='red',cap=1)
 plt.axhline(y=1.0,xmin=0.01,xmax=0.99,color='blue',linestyle=':',alpha=1.0)#the xmin and xmax go from 0 to 1 for each part of the graph (thanks John)
 plt.axhline(y=2.5/2.4,xmin=0.01,xmax=0.99,color='blue',linestyle=':',alpha=0.75)
 plt.axhline(y=2.3/2.4,xmin=0.01,xmax=0.99,color='blue',linestyle=':',alpha=0.75)
 plt.plot(DBMassArrayPlotting,DBPolarValuesRatio,".",color='black',label="Dietrich and Berman")
-plt.errorbar(GorielyMassArrayPlotting,GorielyPolarRatio,yerr=dGorielyPolarRatio,fmt=".",capsize=0,color='green',label="Goriely et al.")
-plt.errorbar(RCNPMassNumberArrayPlotting, RCNPPolarValuesRatio, yerr=RCNPdPolarValuesRatio,fmt=".",color='purple', capsize=0,label="RCNP Data")
+plt.errorbar(GorielyMassArrayPlotting,GorielyPolarRatio,yerr=dGorielyPolarRatio,fmt=".",capsize=0,color='green',label="Goriely et al.",cap=1)
+plt.errorbar(RCNPMassNumberArrayPlotting, RCNPPolarValuesRatio, yerr=RCNPdPolarValuesRatio,fmt=".",color='purple', capsize=0,label="RCNP Data",cap=1)
 
 
 y_range = plt.ylim()
