@@ -108,34 +108,34 @@ def log_probability(theta, x, y, yerr):
 #Tb159data = '/content/drive/MyDrive/Tb159.csv'
 #Ta181data = '/content/drive/MyDrive/Ta181.csv'
 listOfNuclei = list()
-listOfNuclei.append('Y89')
-listOfNuclei.append('Zr90')#finally a good fit! needs two peaks??
-listOfNuclei.append('Zr91')#good fit
-listOfNuclei.append('Zr92')#good fit
-listOfNuclei.append('Zr94')
-listOfNuclei.append('Rh103')#good fit
-listOfNuclei.append('Sn112')
-listOfNuclei.append('Sn114')
-listOfNuclei.append('Sn116')
-listOfNuclei.append('Sn117')
-listOfNuclei.append('Sn118')
-listOfNuclei.append('Sn119')
-listOfNuclei.append('Sn120')
-listOfNuclei.append('Sn122')
-listOfNuclei.append('Sn124')
-listOfNuclei.append('Cs133')#good fit
-listOfNuclei.append('Ba138')#good fit
-listOfNuclei.append('La139')#good fit
-listOfNuclei.append('Pr141')#good fit
-listOfNuclei.append('Sm144')#good fit
-listOfNuclei.append('Tb159')#good fit
-listOfNuclei.append('Ho165')#good fit
-listOfNuclei.append('Tm169')#good fit
+#listOfNuclei.append('Y89')
+#listOfNuclei.append('Zr90')#finally a good fit! needs two peaks??
+#listOfNuclei.append('Zr91')#good fit
+#listOfNuclei.append('Zr92')#good fit
+#listOfNuclei.append('Zr94')
+#listOfNuclei.append('Rh103')#good fit
+#listOfNuclei.append('Sn112')
+#listOfNuclei.append('Sn114')
+#listOfNuclei.append('Sn116')
+#listOfNuclei.append('Sn117')
+#listOfNuclei.append('Sn118')
+#listOfNuclei.append('Sn119')
+#listOfNuclei.append('Sn120')
+#listOfNuclei.append('Sn122')
+#listOfNuclei.append('Sn124')
+#listOfNuclei.append('Cs133')#good fit
+#listOfNuclei.append('Ba138')#good fit
+#listOfNuclei.append('La139')#good fit
+#listOfNuclei.append('Pr141')#good fit
+#listOfNuclei.append('Sm144')#good fit
+#listOfNuclei.append('Tb159')#good fit
+#listOfNuclei.append('Ho165')#good fit
+#listOfNuclei.append('Tm169')#good fit
 listOfNuclei.append('Ta181')#good fit with a new dataset
-listOfNuclei.append('Au197')#good fit but might want to include lower-energy data
-listOfNuclei.append('Pb206')
-listOfNuclei.append('Pb207')#good fit but very small! -EXFOR data appear to peak at 500 mb not 600 mb as paper suggests
-listOfNuclei.append('Pb208')#fit works
+#listOfNuclei.append('Au197')#good fit but might want to include lower-energy data
+#listOfNuclei.append('Pb206')
+#listOfNuclei.append('Pb207')#good fit but very small! -EXFOR data appear to peak at 500 mb not 600 mb as paper suggests
+#listOfNuclei.append('Pb208')#fit works
 
 PolarValues = []
 dPolarValues = []
@@ -186,6 +186,10 @@ for NucleiName in listOfNuclei:
   print(pathData)
 
   nucleiData = np.loadtxt(pathData,delimiter=',')
+  
+  ind = np.argsort( nucleiData[:,0] ); nucleiData = nucleiData[ind] #magic sorting thingy I found on StackOverflow to get the gd Ta181 data into the right order
+  
+  print(nucleiData)
 
   mask = np.abs(nucleiData[:,0]<24)#truncate to <24 MeV for the gamma-ray energy
   nucleiData = nucleiData[mask]
@@ -676,8 +680,8 @@ fig, ax = plt.subplots(1)
 ax.errorbar(MassNumberArray,PolarValues, yerr=dPolarValues,fmt=".", capsize=0,label="Present Evaluation",color='red')
 ax.set_aspect(0.75)
 plt.plot(DBMassArrayPlotting,DBPolarValues,".",color='black',label="Dietrich and Berman")
-plt.errorbar(GorielyMassArrayPlotting,GorielyPolarValues,yerr=dGorielyPolarValues,fmt=".",capsize=0,color='green',label="Goriely et al.",cap=1)
-plt.errorbar(RCNPMassNumberArrayPlotting,RCNPPolarValues, yerr=RCNPdPolarValues,fmt=".",color='purple',capsize=0,label="RCNP Data",cap=1)
+plt.errorbar(GorielyMassArrayPlotting,GorielyPolarValues,yerr=dGorielyPolarValues,fmt=".",capsize=0,color='green',label="Goriely et al.")
+plt.errorbar(RCNPMassNumberArrayPlotting,RCNPPolarValues, yerr=RCNPdPolarValues,fmt=".",color='purple',capsize=0,label="RCNP Data")
 plt.xlabel('Mass Number')
 plt.ylabel(r'$\sigma_{-2}$ [mb/MeV]');
 plt.savefig('CombinedPolarPlot.pdf')
