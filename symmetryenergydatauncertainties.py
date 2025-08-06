@@ -108,52 +108,49 @@ def log_probability(theta, x, y, yerr):
 #Tb159data = '/content/drive/MyDrive/Tb159.csv'
 #Ta181data = '/content/drive/MyDrive/Ta181.csv'
 listOfNuclei = list()
-listOfNuclei.append('Y89')
-listOfNuclei.append('Zr90')#finally a good fit! needs two peaks??
-listOfNuclei.append('Zr91')#good fit
-listOfNuclei.append('Zr92')#good fit
-listOfNuclei.append('Zr94')
+#listOfNuclei.append('Y89')
+#listOfNuclei.append('Zr90')#finally a good fit! needs two peaks??
+#listOfNuclei.append('Zr91')#good fit
+#listOfNuclei.append('Zr92')#good fit
+#listOfNuclei.append('Zr94')
 listOfNuclei.append('Mo92')
 listOfNuclei.append('Mo94')
-#listOfNuclei.append('Mo95')#data not available
-listOfNuclei.append('Mo96')
-#listOfNuclei.append('Mo97')#data not available
-listOfNuclei.append('Mo98')
-listOfNuclei.append('Mo100')
-listOfNuclei.append('Rh103')#good fit
-listOfNuclei.append('Sn112')
-listOfNuclei.append('Sn114')
-listOfNuclei.append('Sn116')
-listOfNuclei.append('Sn117')
-listOfNuclei.append('Sn118')
-listOfNuclei.append('Sn119')
-listOfNuclei.append('Sn120')
-listOfNuclei.append('Sn122')
-listOfNuclei.append('Sn124')
-listOfNuclei.append('Cs133')#good fit
-listOfNuclei.append('Ba138')#good fit
-listOfNuclei.append('La139')#good fit
-listOfNuclei.append('Pr141')#good fit
-#listOfNuclei.append('Nd142')
-#listOfNuclei.append('Nd144')
-#listOfNuclei.append('Nd150')
-#listOfNuclei.append('Nd152')
-listOfNuclei.append('Sm144')#good fit
-#listOfNuclei.append('Sm146')
-#listOfNuclei.append('Sm147')
-#listOfNuclei.append('Sm148')
-#listOfNuclei.append('Sm149')
-#listOfNuclei.append('Sm150')
-#listOfNuclei.append('Sm152')
-#listOfNuclei.append('Sm154')
-listOfNuclei.append('Tb159')#good fit
-listOfNuclei.append('Ho165')#good fit
-listOfNuclei.append('Tm169')#good fit
-listOfNuclei.append('Ta181')#good fit with a new dataset
-listOfNuclei.append('Au197')#good fit but might want to include lower-energy data
-listOfNuclei.append('Pb206')
-listOfNuclei.append('Pb207')#good fit but very small! -EXFOR data appear to peak at 500 mb not 600 mb as paper suggests
-listOfNuclei.append('Pb208')#fit works
+listOfNuclei.append('Mo96')#good fit
+listOfNuclei.append('Mo98')#good fit
+#listOfNuclei.append('Mo100')#good fit
+#listOfNuclei.append('Rh103')#good fit
+#listOfNuclei.append('Sn112')#good fit
+#listOfNuclei.append('Sn114')#should take another look, weird shape?
+#listOfNuclei.append('Sn116')#good fit
+#listOfNuclei.append('Sn117')#should take another look, weird shape?
+#listOfNuclei.append('Sn118')#should take another look, weird shape?
+#listOfNuclei.append('Sn119')#should take another look, weird shape?
+#listOfNuclei.append('Sn120')#niiiice
+#listOfNuclei.append('Sn122')#needs a second peak and has an odd behaviour at >20 MeV
+#listOfNuclei.append('Sn124')#looks good
+#listOfNuclei.append('Cs133')#good fit
+#listOfNuclei.append('Ba138')#good fit
+#listOfNuclei.append('La139')#good fit
+#listOfNuclei.append('Pr141')#good fit
+#listOfNuclei.append('Nd142')#good fit
+#listOfNuclei.append('Nd144')#good fit
+#listOfNuclei.append('Nd146')#good fit
+#listOfNuclei.append('Nd148')#good fit
+#listOfNuclei.append('Nd150')#good fit
+#listOfNuclei.append('Sm144')#good fit
+#listOfNuclei.append('Sm146')#good fit
+#listOfNuclei.append('Sm148')#good fit
+#listOfNuclei.append('Sm150')#good fit but only if we force it to be one peak - splitting not yet pronounced enough to get two peaks to fit well - would be good to have coincidence data for the K=0/1 splitting :')
+#listOfNuclei.append('Sm152')#good fit
+#listOfNuclei.append('Sm154')#good fit
+#listOfNuclei.append('Tb159')#good fit
+#listOfNuclei.append('Ho165')#good fit
+#listOfNuclei.append('Tm169')#good fit
+#listOfNuclei.append('Ta181')#good fit with a new dataset
+#listOfNuclei.append('Au197')#good fit but might want to include lower-energy data
+#listOfNuclei.append('Pb206')
+#listOfNuclei.append('Pb207')#good fit but very small! - there appears to be an error in the EXFOR data appear to peak at 500 mb not 600 mb as paper suggests
+#listOfNuclei.append('Pb208')#fit works
 
 PolarValues = []
 dPolarValues = []
@@ -180,6 +177,7 @@ if(len(DBMassArray)!=len(DBPolarValues)):
   print(len(DBPolarValues))
 
 GorielyMassArray = [59,89,103,139,159,165,169,181,197,208,209]
+GorielyElementNumberArray = [27,39,45,57,73,67,69,73,79,82,82]
 GorielyTRKValues = [1.15,1.13,1.28,1.31,1.33,1.32,1.25,1.31,1.32,1.29,1.53]
 dGorielyTRKValues = [0.01,0.02,0.01,0.02,0.01,0.03,0.02,0.03,0.02,0.03,0.02]
 GorielyPolarValues = [2.84,4.73,6.90,10.78,13.63,15.11,13.56,16.40,18.04,19.82,22.64]
@@ -210,6 +208,8 @@ for NucleiName in listOfNuclei:
   print(nucleiData)
 
   mask = np.abs(nucleiData[:,0]<24)#truncate to <24 MeV for the gamma-ray energy
+  if(NucleiName=='Sn117'):
+    mask = np.abs(nucleiData[:,0]<20)#looks like there's a bg tail at high E_gamma for Sn117
   nucleiData = nucleiData[mask]
 
   #extract the mass number from the array (eventually, this took me way too long!)
@@ -337,8 +337,8 @@ for NucleiName in listOfNuclei:
   print("soln.x",soln.x)
 
   if(len(soln.x)==6):
-    if(NucleiName=='Sn112' or NucleiName=='Zr94'):
-      print('Sn112 or Zr94, need to manually make a single peak for some reason?')
+    if(NucleiName=='Sn112' or NucleiName=='Zr94' or NucleiName=='Sm150'):
+      print('Sn112 or Zr94 or Sm150, need to manually make a single peak for some reason?')
       initial = np.array([PeakWidths[0],ydata[PeakIndices[0]],PeakLocations[0]])+ 0.1*np.random.randn(3)
       soln = optimize.minimize(nll, initial, args=(xdata, ydata, dydata))
       wid_fit_opt, sig_opt, em_opt = soln.x
@@ -394,8 +394,10 @@ for NucleiName in listOfNuclei:
   )
   if(len(soln.x)==3):
     sampler.run_mcmc(pos, 5000, progress=True);
+  elif(len(soln.x)==6 and NucleiName=="Sm150"):
+    sampler.run_mcmc(pos, 200000, progress=True);  
   elif(len(soln.x)==6):
-    sampler.run_mcmc(pos, 100000, progress=True);
+    sampler.run_mcmc(pos, 20000, progress=True);
 
 
   if(len(soln.x)==3):
@@ -515,11 +517,15 @@ for NucleiName in listOfNuclei:
   integral_result_sigma_minus2 = integrate.quad(lambda x:model_minus2(soln.x,x),lower_limit,upper_limit)
   print("integral result for the best fit values")
   print(integral_result_sigma_minus2)
+  
+  integral_result_TRK = integrate.quad(lambda x:model(soln.x,x),lower_limit,upper_limit)
 
   integral_result_array = []
   integral_result_array_TRK = []
   integral_result_array_TRK_vs_Energy = []
   integral_result_array_sigma2_vs_Energy = []
+  integral_result_array_TRK_vs_Energy_lower_limit_changing = []
+  integral_result_array_sigma2_vs_Energy_lower_limit_changing = []
 
   for i in range(len(flat_samples[:,1])):
     integral_result_array.append(integrate.quad(lambda x:model_minus2(flat_samples[i,:],x),lower_limit,upper_limit))
@@ -532,9 +538,23 @@ for NucleiName in listOfNuclei:
   for i in range(len(plot_xdata)):
     integral_result_array_TRK_vs_Energy.append(integrate.quad(lambda x:model(soln.x,x),lower_limit,plot_xdata[i]))
     integral_result_array_sigma2_vs_Energy.append(integrate.quad(lambda x:model_minus2(soln.x,x),lower_limit,plot_xdata[i]))
+    
+  energy_values_for_checking_lower_limit = []  
+  number_of_steps = 1000
+  
+  for i in range(0,number_of_steps):
+      energy_values_for_checking_lower_limit.append(i*upper_limit/number_of_steps)
+    
+  #print(energy_values_for_checking_lower_limit)#why was a printing this out? It's just a list of numbers! Argh!
+          
+  for i in range(len(energy_values_for_checking_lower_limit)):  
+    integral_result_array_TRK_vs_Energy_lower_limit_changing.append(integrate.quad(lambda x:model(soln.x,x),energy_values_for_checking_lower_limit[i],upper_limit))
+    integral_result_array_sigma2_vs_Energy_lower_limit_changing.append(integrate.quad(lambda x:model_minus2(soln.x,x),energy_values_for_checking_lower_limit[i],upper_limit))
 
   integral_result_array_TRK_vs_Energy = np.array(integral_result_array_TRK_vs_Energy)
   integral_result_array_sigma2_vs_Energy = np.array(integral_result_array_sigma2_vs_Energy)
+  integral_result_array_TRK_vs_Energy_lower_limit_changing = np.array(integral_result_array_TRK_vs_Energy_lower_limit_changing)
+  integral_result_array_sigma2_vs_Energy_lower_limit_changing = np.array(integral_result_array_sigma2_vs_Energy_lower_limit_changing)
 
   plt.clf()
   plt.plot(plot_xdata,integral_result_array_sigma2_vs_Energy[:,0])
@@ -545,6 +565,45 @@ for NucleiName in listOfNuclei:
   outputFigName = 'figures/'
   outputFigName += NucleiName
   outputFigName += 'DipolePolExhaustionPlot.png'
+  plt.savefig(outputFigName)
+  plt.clf()
+  #plt.ion()
+  
+  plt.clf()
+  plt.plot(plot_xdata,integral_result_array_TRK_vs_Energy[:,0])
+  plt.xlabel('$E_{max}$ [MeV]')
+  plt.ylabel(r'$\sigma_{-2}$ [mb/MeV]')
+  plt.axhline(y=integral_result_TRK[0],xmin=0.01,xmax=0.99,color='blue',linestyle=':',alpha=1.0,label="Proper Result")
+
+  outputFigName = 'figures/'
+  outputFigName += NucleiName
+  outputFigName += 'TRKExhaustionPlot.png'
+  plt.savefig(outputFigName)
+  plt.clf()
+  #plt.ion()
+  
+  plt.clf()
+  plt.plot(energy_values_for_checking_lower_limit,integral_result_array_sigma2_vs_Energy_lower_limit_changing[:,0])
+  plt.xlabel('$E_{max}$ [MeV]')
+  plt.ylabel(r'$\sigma_{-2}$ [mb/MeV]')
+  plt.axhline(y=integral_result_sigma_minus2[0],xmin=0.01,xmax=0.99,color='blue',linestyle=':',alpha=1.0,label="Proper Result")
+
+  outputFigName = 'figures/'
+  outputFigName += NucleiName
+  outputFigName += 'DipolePolExhaustionPlotLower.png'
+  plt.savefig(outputFigName)
+  plt.clf()
+  #plt.ion()
+  
+  plt.clf()
+  plt.plot(energy_values_for_checking_lower_limit,integral_result_array_TRK_vs_Energy_lower_limit_changing[:,0])
+  plt.xlabel('$E_{max}$ [MeV]')
+  plt.ylabel(r'$\sigma_{-2}$ [mb/MeV]')
+  plt.axhline(y=integral_result_TRK[0],xmin=0.01,xmax=0.99,color='blue',linestyle=':',alpha=1.0,label="Proper Result")
+
+  outputFigName = 'figures/'
+  outputFigName += NucleiName
+  outputFigName += 'TRKExhaustionPlotLower.png'
   plt.savefig(outputFigName)
   plt.clf()
   #plt.ion()
@@ -668,7 +727,11 @@ dPolarValues = np.array(dPolarValues)
 #arrays for the ratio values
 PolarValuesRatio = []
 dPolarValuesRatio = []
+TRKValuesRatio = []
+dTRKValuesRatio = []
 DBPolarValuesRatio = []
+GorielyTRKRatio = []
+dGorielyTRKRatio = []
 GorielyPolarRatio = []
 dGorielyPolarRatio = []
 
@@ -687,6 +750,10 @@ for i in range(len(DBMassArray)):
 for i in range(len(GorielyMassArray)):
   GorielyPolarRatio.append(1000*GorielyPolarValues[i]/(2.4*pow(GorielyMassArray[i],5./3.)))
   dGorielyPolarRatio.append(1000*GorielyPolarValues[i]/(2.4*pow(GorielyMassArray[i],5./3.))*pow(pow(dGorielyPolarValues[i]/GorielyPolarValues[i],2.) + pow(0.1/2.4,2.),0.5))
+  kappa = 0.0
+  TRKCalculation = 60*(GorielyMassArray[i] - GorielyElementNumberArray[i]) * GorielyElementNumberArray[i]/ GorielyMassArray[i] * (1+kappa) #in MeV mb, 60NZ/A(1+k)
+  GorielyTRKRatio.append(GorielyTRKValues[i]/TRKCalculation)
+  dGorielyTRKRatio.append(dGorielyTRKValues[i]/TRKCalculation)
 
 
 #spread out values slightly in x - this is solely so people can see WTF is going on
@@ -745,6 +812,8 @@ plt.clf()
 #plt.ion()
 
 
+
+
 print('Polarisation values from the current work')
 #print(PolarValues)
 for i in range(len(PolarValues)):
@@ -755,7 +824,49 @@ for i in range(len(TRKValues)):
   kappa = 0.0
   print('MassNumberArray',MassNumberArray[i],'ElementNumberArray',ElementNumberArray[i],'Neutrons!',MassNumberArray[i]-ElementNumberArray[i])
   TRKCalculation = 60*(MassNumberArray[i] - ElementNumberArray[i]) * ElementNumberArray[i]/ MassNumberArray[i] * (1+kappa) #in MeV mb, 60NZ/A(1+k)
+  TRKValuesRatio.append(TRKValues[i]/TRKCalculation)
+  dTRKValuesRatio.append(dTRKValues[i]/TRKCalculation)
   print('Nuclei Name:',listOfNuclei[i],'TRKValues',TRKValues[i],'TRKCalculation',TRKCalculation,'TRK Sum Value',TRKValues[i]/TRKCalculation)
+
+fig3, ax3 = plt.subplots(figsize=[320/25.4,190/25.4])
+ax3.errorbar(MassNumberArray,TRKValues, yerr = dTRKValues,fmt=".", capsize=0, label="Present Evaluation",color='red')
+ax3.set_aspect(100)
+ax3.errorbar(GorielyMassArrayPlotting,GorielyTRKValues,yerr=dGorielyPolarRatio,fmt=".",capsize=0,color='green',label="Goriely et al.")
+y_range = plt.ylim()
+rect = patches.Rectangle((136,y_range[0]),8,y_range[1]-y_range[0],alpha=0.3,color='blue')#adding the region of the N=82 shell closure
+plt.gca().add_patch(rect)
+rect2 = patches.Rectangle((86,y_range[0]),6,y_range[1]-y_range[0],alpha=0.3,color='blue')#adding the region of the N=50 shell closure
+plt.gca().add_patch(rect2)
+rect3 = patches.Rectangle((208,y_range[0]),2,y_range[1]-y_range[0],alpha=0.3,color='blue')#adding the region of the N=126 shell closure
+plt.gca().add_patch(rect3)
+rect_z1 = patches.Rectangle((112,y_range[0]),12,y_range[1]-y_range[0],alpha=0.3,color='red')#adding the Z=50 shell closure
+plt.gca().add_patch(rect_z1)
+rect_z2 = patches.Rectangle((204,y_range[0]),4,y_range[1]-y_range[0],alpha=0.3,color='red')#adding the Z=82 shell closure
+plt.gca().add_patch(rect_z2)
+plt.xlabel('Mass Number',fontsize=16)
+plt.ylabel(r'Ratio Analysed TRK sum to systematics$',fontsize=16)
+plt.legend()
+plt.savefig('CombinedTRKPlot.pdf')
+plt.savefig('CombinedTRKPlot.png')
+
+fig3, ax3 = plt.subplots(figsize[320/25.4,190/25.4])
+ax3.errorbar(MassNumberArray,TRKValuesRatio, yerr = dTRKValuesRatio,fmt=".", capsize=0, label="Present Evaluation",color='red')
+ax3.set_aspect(100)
+rect = patches.Rectangle((136,y_range[0]),8,y_range[1]-y_range[0],alpha=0.3,color='blue')#adding the region of the N=82 shell closure
+plt.gca().add_patch(rect)
+rect2 = patches.Rectangle((86,y_range[0]),6,y_range[1]-y_range[0],alpha=0.3,color='blue')#adding the region of the N=50 shell closure
+plt.gca().add_patch(rect2)
+rect3 = patches.Rectangle((208,y_range[0]),2,y_range[1]-y_range[0],alpha=0.3,color='blue')#adding the region of the N=126 shell closure
+plt.gca().add_patch(rect3)
+rect_z1 = patches.Rectangle((112,y_range[0]),12,y_range[1]-y_range[0],alpha=0.3,color='red')#adding the Z=50 shell closure
+plt.gca().add_patch(rect_z1)
+rect_z2 = patches.Rectangle((204,y_range[0]),4,y_range[1]-y_range[0],alpha=0.3,color='red')#adding the Z=82 shell closure
+plt.gca().add_patch(rect_z2)
+plt.xlabel('Mass Number',fontsize=16)
+plt.ylabel(r'Ratio Analysed TRK sum to systematics$',fontsize=16)
+plt.legend()
+plt.savefig('CombinedTRKRatiosPlot.pdf')
+plt.savefig('CombinedTRKRatiosPlot.png')
 
 #make LaTeX table for paper
 for i in range(len(PolarValues)):
